@@ -143,6 +143,16 @@ input {
     text-decoration: none;
     font-weight: 600;
 }
+input:focus {
+    outline: none; /* remove default blue outline */
+    border: 2px solid #00ff7f; /* green border */
+    background: #152025; /* slightly lighter background to show focus */
+    transition: 0.3s; /* smooth transition */
+}
+
+input::placeholder {
+    color: #aaa; /* lighter placeholder text */
+}
 </style>
 </head>.
 <script src="intelligent.js"></script>
@@ -175,6 +185,7 @@ input {
     </div>
 
     <button class="btn" type="submit">Start Playing</button>
+    <div class="form-message" style="margin-top:10px; font-size:14px;"></div>
 </form>
     <div class="or-line">OR</div>
 
@@ -188,6 +199,18 @@ input {
         Don’t have an account? <a href="#">Sign up</a>
     </div>
 </div>
+<script>
+const inputs = document.querySelectorAll('input');
+
+inputs.forEach(input => {
+  input.addEventListener('input', () => {
+    input.style.boxShadow = '0 0 8px #00ff7f'; // green glow
+  });
+  input.addEventListener('blur', () => {
+    input.style.boxShadow = 'none'; // remove glow when not typing
+  });
+});
+</script>
 <script>
 const passwordInput = document.querySelector('.password-field input');
 const showPassBtn = document.querySelector('.show-pass');
