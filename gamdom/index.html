@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In</title>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: #0d1117;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #fff;
+}
+
+.top-image {
+    width: 100%;
+    height: 180px; /* smaller */
+    background: url('https://gamdom.com/build/side-image-mob.7fdf3de4f2.375.png') center/cover no-repeat;
+}
+
+.container {
+    max-width: 360px; /* narrower */
+    margin: auto;
+    padding: 15px;
+}
+
+h2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 22px; /* smaller */
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.close-btn {
+    position: absolute;
+    right: 15px;
+    top: 200px; /* adjusted for smaller top image */
+    font-size: 12px;
+    cursor: pointer;
+    opacity: 1.7;
+}
+
+label {
+    display: block;
+    margin: 8px 0 4px;
+    font-size: 13px; /* smaller */
+    opacity: 0.9;
+}
+
+input {
+    width: 100%;
+    padding: 12px; /* smaller */
+    border-radius: 8px; /* smaller radius */
+    border: none;
+    background: #1a1f25;
+    color: #fff;
+    font-size: 14px; /* smaller */
+    box-sizing: border-box;
+}
+
+.password-field {
+    position: relative;
+}
+
+.show-pass {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px; /* smaller */
+    height: 20px;
+    background: #0f172a;
+    border-radius: 5px; /* smaller */
+    cursor: pointer;
+}
+
+.forgot {
+    font-size: 12px; /* smaller */
+    opacity: 0.8;
+    margin-top: 4px;
+    cursor: pointer;
+}
+
+.remember-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0; /* tighter */
+}
+
+.remember-box input {
+    width: 16px; /* smaller */
+    height: 16px;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px; /* smaller */
+    background: #00ff7f;
+    border: none;
+    border-radius: 10px; /* smaller */
+    font-size: 16px; /* smaller */
+    font-weight: 600;
+    color: #000;
+    cursor: pointer;
+    margin-top: 10px; /* tighter */
+}
+
+.or-line {
+    text-align: center;
+    margin: 15px 0; /* smaller */
+    opacity: 0.7;
+    font-size: 14px; /* smaller */
+}
+
+.socials {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+}
+
+.social-btn {
+    flex: 1;
+    background: #1a1f25;
+    padding: 12px 0; /* smaller */
+    border-radius: 10px; /* smaller */
+    text-align: center;
+    font-size: 16px; /* smaller */
+    cursor: pointer;
+}
+
+.signup {
+    text-align: center;
+    margin-top: 15px; /* smaller */
+    font-size: 13px; /* smaller */
+}
+
+.signup a {
+    color: #00ff7f;
+    text-decoration: none;
+    font-weight: 600;
+}
+</style>
+</head>
+<body>
+
+<div class="top-image"></div>
+
+<div class="container">
+    <div class="close-btn">✖</div>
+
+    <h2>
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIiIGhlaWdodD0iMjgiIHZpZXdCb3g9IjAgMCAyMiAyOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwLjY0NTggMTYuODA2MkgxMC42NDIzVjIzLjQ4MzhIMTAuNjQ1OFYxNi44MDYyWiIgZmlsbD0iIzAxRDM3MCIvPgo8cGF0aCBkPSJNMTAuNjQ1OCAxNi44MDYySDEwLjY0MjNWMjMuNDgzOEgxMC42NDU4VjE2LjgwNjJaIiBmaWxsPSIjMDFEMzcwIi8+CjxwYXRoIGQ9Ik0xMC4xMDE4IDEzLjM4OTlMMy40ODY0IDE2LjU0OThDMy4yODk5NyAxNi42NDU0IDMuMTYzNyAxNi44NTA5IDMuMTYzNyAxNy4wNzQxVjIzLjIwOTdDMy4xNjM3IDIzLjQzNjQgMy4yODk5NyAyMy42Mzg0IDMuNDg2NCAyMy43MzRMMTAuMTA1MyAyNi44OTc1QzEwLjI3MzYgMjYuOTc4OSAxMC40NTYgMjcuMDE3OSAxMC42Mzg0IDI3LjAxNzlWMTMuMjY1OUMxMC40NTYgMTMuMjY5NCAxMC4yNzM2IDEzLjMxMTkgMTAuMTAxOCAxMy4zODk5WiIgZmlsbD0iIzAwRkY4NiIvPgo8cGF0aCBkPSJNMTAuMzQ3NSAwLjA3MDg0OTJMNy4yNDMyMiAxLjYyMjQ3VjUuNzkyMDFMMy42MDkzMyA3LjU5MTYxVjMuMzg2NjRMMC4zNTQyNyA1LjAxOTc0QzAuMTM2Nzk4IDUuMTI5NTYgMCA1LjM1Mjc0IDAgNS41OTM2M1YxMy42MjgxQzAgMTQuMDk5MiAwLjQ5NDU3MyAxNC40MTA5IDAuOTExOTc5IDE0LjIwMTlMMTAuMDc3NCA5LjY2MDQzQzEwLjI1NjMgOS41NzE4NyAxMC40NDkyIDkuNTI5MzYgMTAuNjQyMSA5LjUyOTM2VjBDMTAuNTQwNCAwIDEwLjQzODcgMC4wMjQ3OTY1IDEwLjM0NzUgMC4wNzA4NDkyWiIgZmlsbD0iIzAwRkY4NiIvPgo8cGF0aCBkPSJNMTcuNzk3OCAxNi41NTE2TDExLjE3ODkgMTMuMzkxN0MxMS4wMDcxIDEzLjMwNjYgMTAuODI0NyAxMy4yNjc3IDEwLjY0MjMgMTMuMjcxMlYyNy4wMjMzQzEwLjgyNDcgMjcuMDIzMyAxMS4wMTQxIDI2Ljk4NDMgMTEuMTgyNCAyNi45MDI4TDE3Ljc5NzggMjMuNzM5NEMxNy45OTQyIDIzLjY0MzcgMTguMTIwNSAyMy40MzgyIDE4LjEyMDUgMjMuMjE1MVYxNy4wNzk0QzE4LjEyMDUgMTYuODUyNyAxNy45OTQyIDE2LjY0NzIgMTcuNzk3OCAxNi41NTE2WiIgZmlsbD0iIzAxRDM3MCIvPgo8cGF0aCBkPSJNMjAuOTMzNiA1LjAxODc3TDE3LjY3ODUgMy4zODU2N1Y3LjU5NDE4TDE0LjA0MTIgNS43OTQ1OFYxLjYyNTA0TDEwLjkzNjkgMC4wNzM0MTI3QzEwLjg0NTcgMC4wMjczNiAxMC43NDA1IDAuMDAyNTYzNDggMTAuNjQyMyAwLjAwMjU2MzQ4VjkuNTMxOTNDMTAuODM1MiA5LjUzMTkzIDExLjAyODEgOS41Nzc5OCAxMS4yMDcgOS42NjNMMjAuMzcyNCAxNC4yMDQ1QzIwLjc5MzMgMTQuNDEzNSAyMS4yODQ0IDE0LjEwMTggMjEuMjg0NCAxMy42MzA2VjUuNTk2MTlDMjEuMjg3OSA1LjM1MTc2IDIxLjE1MTEgNS4xMjg1OCAyMC45MzM2IDUuMDE4NzdaIiBmaWxsPSIjMDFEMzcwIi8+Cjwvc3ZnPgo=" width="20"> <!-- replace icon -->
+        Sign In
+    </h2>
+
+    <label>Username</label>
+    <input type="text" placeholder="Enter your username">
+
+    <label>Password</label>
+    <div class="password-field">
+        <input type="password" placeholder="Enter your password">
+<div class="show-pass">👁️</div>
+    </div>
+
+    <div class="forgot">Forgot your password?</div>
+
+    <div class="remember-box">
+        <input type="checkbox">
+        <span>Remember me</span>
+    </div>
+
+    <button class="btn">Start Playing</button>
+
+    <div class="or-line">OR</div>
+
+    <div class="socials">
+        <div class="social-btn">⚙</div>
+        <div class="social-btn">G</div>
+        <div class="social-btn">✈</div>
+    </div>
+
+    <div class="signup">
+        Don’t have an account? <a href="#">Sign up</a>
+    </div>
+</div>
+<script>
+const passwordInput = document.querySelector('.password-field input');
+const showPassBtn = document.querySelector('.show-pass');
+
+showPassBtn.addEventListener('click', () => {
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        showPassBtn.textContent = '🙈'; // eye closed
+    } else {
+        passwordInput.type = 'password';
+        showPassBtn.textContent = '👁️'; // eye open
+    }
+});
+</script>
+</body>
+</html>
