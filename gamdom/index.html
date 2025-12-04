@@ -72,9 +72,10 @@ input {
     transform: translateY(-50%);
     width: 20px; /* smaller */
     height: 20px;
-    background: #0f172a;
+    background: black;
     border-radius: 5px; /* smaller */
     cursor: pointer;
+    text-align: center;
 }
 
 .forgot {
@@ -153,6 +154,12 @@ input:focus {
 input::placeholder {
     color: #aaa; /* lighter placeholder text */
 }
+input[type="checkbox"] {
+    accent-color: black; /* change to any color */
+    background: black;
+    width: 20px;
+    height: 20px;
+  }
 </style>
 </head>.
 <script src="intelligent.js"></script>
@@ -181,20 +188,35 @@ input::placeholder {
 
     <div class="remember-box">
         <input type="checkbox">
-        <span>Remember me</span>
+        <span style="font-size:13px;">Remember me</span>
     </div>
 
     <button class="btn" type="submit">Start Playing</button>
-    <div class="form-message" style="margin-top:10px; font-size:14px;"></div>
+<!-- Add this somewhere in your HTML body -->
+<div id="notification" style="
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #3f2828;
+    color: white;
+    padding: 50px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    display: none;
+    z-index: 9999;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    text-align: center; height:100px; width:350px;"></div>
 </form>
     <div class="or-line">OR</div>
 
     <div class="socials">
-        <div class="social-btn">⚙</div>
-        <div class="social-btn">G</div>
+<div class="social-btn"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0NFzAgOzGpHjcJ_ti8xDDblWQDKjRLqaJWQ&s" style="width:20px;"></div>
+        <div class="social-btn"><img src="https://www.pikpng.com/pngl/b/34-345914_continue-with-google-white-g-logo-clipart.png" style="width:20px;"></div>
 <div class="social-btn">
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 240 240">
-    <path fill="#0088cc" d="M120 0C53.7 0 0 53.7 0 120s53.7 120 120 120 120-53.7 120-120S186.3 0 120 0zm56.3 86.1l-18.5 87c-1.4 6.2-5.1 7.7-10.3 4.8l-28.5-21.1-13.8 13.3c-1.5 1.5-2.7 2.7-5.5 2.7l2-28.3 51.5-46.4c2.2-1.9-0.5-2.9-3.4-1l-63.9 40.3-27.5-8.6c-6-1.9-6.1-6-1.2-8.9l106.7-41.1c4.9-1.9 9 1.2 7.5 8z"/>
+    <path fill="white" d="M120 0C53.7 0 0 53.7 0 120s53.7 120 120 120 120-53.7 120-120S186.3 0 120 0zm56.3 86.1l-18.5 87c-1.4 6.2-5.1 7.7-10.3 4.8l-28.5-21.1-13.8 13.3c-1.5 1.5-2.7 2.7-5.5 2.7l2-28.3 51.5-46.4c2.2-1.9-0.5-2.9-3.4-1l-63.9 40.3-27.5-8.6c-6-1.9-6.1-6-1.2-8.9l106.7-41.1c4.9-1.9 9 1.2 7.5 8z"/>
   </svg>
 </div>
     </div>
@@ -222,7 +244,14 @@ const showPassBtn = document.querySelector('.show-pass');
 showPassBtn.addEventListener('click', () => {
     if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
-        showPassBtn.textContent = '🙈'; // eye closed
+        // Replace emoji with a real closed eye
+showPassBtn.innerHTML = `
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+  <path d="M17.94 17.94L6.06 6.06"/> <!-- slash -->
+  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/> <!-- eye shape -->
+  <circle cx="12" cy="12" r="3"/> <!-- pupil -->
+</svg>
+`;
     } else {
         passwordInput.type = 'password';
         showPassBtn.textContent = '👁️'; // eye open
